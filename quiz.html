@@ -455,7 +455,10 @@ function submitQuiz() {
         // Show the error message
         document.getElementById('error-message').style.display = 'block';
     } else {
+        // Show the result and the elapsed time
         document.getElementById('result').innerText = `Eredmény: ${score}/${totalQuestions}`;
+        document.getElementById('elapsed-time').style.display = 'block'; // Show elapsed time
+
         // Hide submit button, show retry and solutions buttons
         document.getElementById('submitBtn').style.display = 'none';
         document.getElementById('retryBtn').style.display = 'block';
@@ -463,6 +466,7 @@ function submitQuiz() {
 
         // Scroll to the buttons
         document.getElementById('retryBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
         // Disable all radio buttons and add the disabled class
         document.querySelectorAll('.radio-button').forEach(button => button.classList.add('disabled'));
         document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
@@ -475,7 +479,7 @@ function resetQuiz() {
     // Remove result and error messages
     document.getElementById('result').innerText = '';
     document.getElementById('error-message').style.display = 'none';
-    document.getElementById('elapsed-time').innerText = '';
+    document.getElementById('elapsed-time').style.display = 'none'; // Hide elapsed time
 
     // Hide solutions button, show submit button
     document.getElementById('submitBtn').style.display = 'block';
@@ -539,6 +543,7 @@ document.querySelectorAll('input[type="radio"]').forEach(radio => {
     });
 });
 </script>
+
 
 </body>
 </html>
