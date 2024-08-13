@@ -358,10 +358,7 @@
                 </div>
             </div>
 
-            <div class="result" id="result">
-            <div id="elapsed-time"></div>
-            </div>
-
+            <div class="result" id="result"></div>
             <div class="error-message" id="error-message" style="display: none;">Kérjük, válaszolj minden kérdésre!</div>
             <div class="radio-group">
                 <button type="button" id="submitBtn" onclick="submitQuiz()">Küldés</button>
@@ -370,180 +367,120 @@
             </div>
         </form>
     </div>
-<script>
-let startTime;
-let timerInterval;
-let solutionsViewed = false;
+    <script>
+        let solutionsViewed = false;
 
-const correctAnswers = {
-    q1: 'B',
-    q2: 'A',
-    q3: 'A',
-    q4: 'A',
-    q5: 'A'
-};
+        const correctAnswers = {
+            q1: 'B',
+            q2: 'A',
+            q3: 'A',
+            q4: 'A',
+            q5: 'A'
+        };
 
-function startTimer() {
-    startTime = new Date().getTime();
+        function submitQuiz() {
+            let score = 0;
+            const totalQuestions = 5;
+            let allAnswered = true;
+            let hasError = false;
+            let firstErrorCard = null;
 
-    timerInterval = setInterval(() => {
-        const currentTime = new Date().getTime();
-        const elapsedTime = currentTime - startTime;
+            // Remove previous error classes
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('error'));
 
-        // Convert elapsed time to readable format
-        const seconds = Math.floor(elapsedTime / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const hours = Math.floor(minutes / 60);
+            // Hide the error message
+            document.getElementById('error-message').style.display = 'none';
 
-        const displaySeconds = seconds % 60;
-        const displayMinutes = minutes % 60;
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+                const questionCard = document.getElementById(`q${i}-card`);
 
-        let timeString = `${displaySeconds} másodperc`;
-        if (minutes > 0) {
-            timeString = `${displayMinutes} perc ${displaySeconds} másodperc`;
-        }
-        if (hours > 0) {
-            timeString = `${hours} óra ${displayMinutes} perc ${displaySeconds} másodperc`;
-        }
-
-        document.getElementById('elapsed-time').innerText = `Idő: ${timeString}`;
-
-        // Automatically submit if more than 2 hours have passed
-        if (hours >= 2) {
-            clearInterval(timerInterval);
-            submitQuiz();
-        }
-    }, 1000);
-}
-
-function submitQuiz() {
-    if (timerInterval) {
-        clearInterval(timerInterval);
-    }
-
-    let score = 0;
-    const totalQuestions = 5;
-    let allAnswered = true;
-    let hasError = false;
-    let firstErrorCard = null;
-
-    // Remove previous error classes
-    document.querySelectorAll('.card').forEach(card => card.classList.remove('error'));
-
-    // Hide the error message
-    document.getElementById('error-message').style.display = 'none';
-
-    for (let i = 1; i <= totalQuestions; i++) {
-        const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
-        const questionCard = document.getElementById(`q${i}-card`);
-
-        if (!selectedOption) {
-            allAnswered = false;
-            hasError = true;
-            questionCard.classList.add('error');
-            if (!firstErrorCard) {
-                firstErrorCard = questionCard;
+                if (!selectedOption) {
+                    allAnswered = false;
+                    hasError = true;
+                    questionCard.classList.add('error');
+                    if (!firstErrorCard) {
+                        firstErrorCard = questionCard;
+                    }
+                } else if (selectedOption.value === correctAnswers[`q${i}`]) {
+                    score++;
+                }
             }
-        } else if (selectedOption.value === correctAnswers[`q${i}`]) {
-            score++;
+
+            if (hasError) {
+                // Scroll to the first error card
+                firstErrorCard.scrollIntoView({ behavior: 'smooth' });
+                // Show the error message
+                document.getElementById('error-message').style.display = 'block';
+            } else {
+                document.getElementById('result').innerText = `Eredmény: ${score}/${totalQuestions}`;
+                // Hide submit button, show retry and solutions buttons
+                document.getElementById('submitBtn').style.display = 'none';
+                document.getElementById('retryBtn').style.display = 'block';
+                document.getElementById('solutionsBtn').style.display = 'block';
+
+                // Scroll to the buttons
+                document.getElementById('retryBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Disable all radio buttons and add the disabled class
+                document.querySelectorAll('.radio-button').forEach(button => button.classList.add('disabled'));
+                document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
+            }
         }
-    }
 
-    if (hasError) {
-        // Scroll to the first error card
-        firstErrorCard.scrollIntoView({ behavior: 'smooth' });
-        // Show the error message
-        document.getElementById('error-message').style.display = 'block';
-    } else {
-        // Show the result and the elapsed time
-        document.getElementById('result').innerText = `Eredmény: ${score}/${totalQuestions}`;
-        document.getElementById('elapsed-time').style.display = 'block'; // Show elapsed time
-
-        // Hide submit button, show retry and solutions buttons
-        document.getElementById('submitBtn').style.display = 'none';
-        document.getElementById('retryBtn').style.display = 'block';
-        document.getElementById('solutionsBtn').style.display = 'block';
-
-        // Scroll to the buttons
-        document.getElementById('retryBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-        // Disable all radio buttons and add the disabled class
-        document.querySelectorAll('.radio-button').forEach(button => button.classList.add('disabled'));
-        document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
-    }
-}
-
-function resetQuiz() {
-    // Reset the form
-    document.getElementById('quizForm').reset();
-    // Remove result and error messages
-    document.getElementById('result').innerText = '';
-    document.getElementById('error-message').style.display = 'none';
-    document.getElementById('elapsed-time').style.display = 'none'; // Hide elapsed time
-
-    // Hide solutions button, show submit button
-    document.getElementById('submitBtn').style.display = 'block';
-    document.getElementById('retryBtn').style.display = 'none';
-    document.getElementById('solutionsBtn').style.display = 'none';
-
-    // Enable all radio buttons and remove the disabled class
-    document.querySelectorAll('.radio-button').forEach(button => button.classList.remove('disabled'));
-    document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = false);
-    // Remove previous answer selections
-    document.querySelectorAll('.radio-button').forEach(button => button.classList.remove('hidden'));
-    document.querySelectorAll('.card').forEach(card => {
-        card.classList.remove('correct');
-        card.querySelectorAll('.radio-button__input').forEach(input => input.checked = false);
-    });
-    // Remove correct answer highlights
-    document.querySelectorAll('.radio-button.correct-answer').forEach(button => button.classList.remove('correct-answer'));
-    // Reset solutions viewed state
-    solutionsViewed = false;
-
-    // Restart the timer
-    startTimer();
-}
-
-function showSolutions() {
-    // If solutions have already been viewed, do nothing
-    if (solutionsViewed) return;
-
-    // Preserve user-selected answers but uncheck them
-    document.querySelectorAll('input[type="radio"]').forEach(input => {
-        if (input.checked) {
-            input.checked = false; // Uncheck selected options
+        function resetQuiz() {
+            // Reset the form
+            document.getElementById('quizForm').reset();
+            // Remove result and error messages
+            document.getElementById('result').innerText = '';
+            document.getElementById('error-message').style.display = 'none';
+            // Hide solutions button, show submit button
+            document.getElementById('submitBtn').style.display = 'block';
+            document.getElementById('retryBtn').style.display = 'none';
+            document.getElementById('solutionsBtn').style.display = 'none';
+            // Enable all radio buttons and remove the disabled class
+            document.querySelectorAll('.radio-button').forEach(button => button.classList.remove('disabled'));
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = false);
+            // Remove previous answer selections
+            document.querySelectorAll('.radio-button').forEach(button => button.classList.remove('hidden'));
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.remove('correct');
+                card.querySelectorAll('.radio-button__input').forEach(input => input.checked = false);
+            });
+            // Remove correct answer highlights
+            document.querySelectorAll('.radio-button.correct-answer').forEach(button => button.classList.remove('correct-answer'));
+            // Reset solutions viewed state
+            solutionsViewed = false;
         }
-    });
 
-    // Show correct answers
-    for (let i = 1; i <= 5; i++) {
-        const correctAnswer = correctAnswers[`q${i}`];
-        const correctRadioButton = document.querySelector(`input[name="q${i}"][value="${correctAnswer}"]`);
-        const correctCard = document.getElementById(`q${i}-card`);
+        function showSolutions() {
+            // If solutions have already been viewed, do nothing
+            if (solutionsViewed) return;
 
-        if (correctRadioButton) {
-            const correctButton = correctRadioButton.parentElement;
-            correctButton.classList.add('correct-answer');
+            // Preserve user-selected answers but uncheck them
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                if (input.checked) {
+                    input.checked = false; // Uncheck selected options
+                }
+            });
+
+            // Show correct answers
+            for (let i = 1; i <= 5; i++) {
+                const correctAnswer = correctAnswers[`q${i}`];
+                const correctRadioButton = document.querySelector(`input[name="q${i}"][value="${correctAnswer}"]`);
+                const correctCard = document.getElementById(`q${i}-card`);
+
+                if (correctRadioButton) {
+                    const correctButton = correctRadioButton.parentElement;
+                    correctButton.classList.add('correct-answer');
+                }
+            }
+
+            // Disable all radio buttons and add the disabled class
+            document.querySelectorAll('.radio-button').forEach(button => button.classList.add('disabled'));
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
+            
+            solutionsViewed = true;
         }
-    }
-
-    // Disable all radio buttons and add the disabled class
-    document.querySelectorAll('.radio-button').forEach(button => button.classList.add('disabled'));
-    document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
-    
-    solutionsViewed = true;
-}
-
-// Start the timer when an option is selected
-document.querySelectorAll('input[type="radio"]').forEach(radio => {
-    radio.addEventListener('change', () => {
-        if (!startTime) {
-            startTimer();
-        }
-    });
-});
-</script>
-
-
+    </script>
 </body>
 </html>
