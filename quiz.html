@@ -5,62 +5,177 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filmes Kvíz</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+         body {
+            font-family: "Montserrat", sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            box-sizing: border-box;
             height: 100vh;
+            display: block;
+        }
+        ::-webkit-scrollbar {
+           width: 16px;
+           background-color: #333;
+        }
+        ::-webkit-scrollbar-thumb {
+          background-color: #555;
+          border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background-color: #777;
+        }
+       ::-webkit-scrollbar-track {
+         background-color: #222;
+       }
+        .quiztitle {
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
         }
         .container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 600px;
-        }
-        .question-number {
-            font-weight: bold;
-        }
-        .question {
-            margin-bottom: 20px;
-        }
-        .option {
-            margin-bottom: 10px;
-        }
-        .radio-button-container {
             display: flex;
             flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            height: 90vh;
+            padding: 5px 15px 15px 15px;            
+            box-sizing: border-box;
+            background-color: #1a1a1a;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .radio-button {
+        .card {
+            background-color: #444;
+            border-radius: 4px;
+            padding: 10px 15px 15px 15px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            position: relative;
+            border: 1px solid transparent;
+        }
+        .card.error {
+            border: 1px solid red;
+        }
+        .card.correct {
+            border: 1px solid green;
+        }
+        .question {
+            margin-bottom: 10px;
+        }
+        .question-title {
+            color: white;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: default;
+        }
+        .option {
+            display: block;
+            margin-bottom: 8px;
+            cursor: default;
+        }
+        .radio-group {
             display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        .radio-button__input {
-            margin-right: 10px;
-        }
-        .radio-button__label {
-            cursor: pointer;
-        }
-        .correct {
-            background-color: #d4edda;
-        }
-        .error {
-            background-color: #f8d7da;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 20%;
         }
         .result {
-            font-weight: bold;
             margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
         }
         .error-message {
             color: red;
-            margin-top: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 14px;
         }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 3px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .radio-button-container {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .radio-button {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+        }
+        .radio-button.disabled {
+            cursor: default;
+        }
+        .radio-button.disabled .radio-button__label {
+            cursor: default;
+        }
+        .radio-button.disabled .radio-button__custom {
+            cursor: default;
+        }
+        .radio-button__input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .radio-button__label {
+            display: flex;
+            align-items: center;
+            padding-left: 25px;
+            position: relative;
+            font-size: 15px;
+            color: #f2f2f2;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .radio-button__custom {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 2px solid #1a1a1a;
+            transition: all 0.3s ease;
+        }
+        .radio-button__input:checked + .radio-button__label .radio-button__custom {
+            background-color: #0059b9;
+        }
+        .radio-button__label:hover .radio-button__custom {
+            transform: scale(1.2);
+            border-color: #1a1a1a;
+        }
+        .radio-button.disabled .radio-button__label:hover .radio-button__custom {
+             transform: none;
+        }
+        .radio-button.correct-answer .radio-button__custom {
+            background-color: green;
+        }
+        .question-number {
+            color: white;
+            text-align: center; 
+            font-weight: 600;
+        }
+            
     </style>
 </head>
 <body>
