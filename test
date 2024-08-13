@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Párkereső Játék</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: gray;
+            cursor: pointer;
+        }
+        .cell.revealed {
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+    <h1>Párkereső Játék</h1>
+    <div class="grid" id="game-board">
+        <!-- A mezők itt fognak megjelenni -->
+    </div>
+    <script>
+        const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta'];
+        let board = document.getElementById('game-board');
+        let firstCell = null;
+        let secondCell = null;
+        let lockBoard = false;
+
+        function initializeBoard() {
+            let shuffledColors = shuffle(colors.concat(colors));
+            for (let i = 0; i < shuffledColors.length; i++) {
+                let cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.color = shuffledColors[i];
+                cell.addEventListener('click', cellClick);
+                board.appendChild(cell);
+            }
+        }
+
+        function cellClick(event) {
+            if (lockBoard) return;
+            let cell = event.target;
+            if (cell.classList.contains('revealed')) return;
+
+            cell.style.backgroundColor = cell.dataset.color;
+
+            if (!firstCell) {
+                firstCell = cell;
+            } else {
+                secondCell = cell;
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            if (firstCell.dataset.color === secondCell.dataset.color) {
+                firstCell.classList.add('revealed');
+                secondCell.classList.add('revealed');
+                resetTurn();
+            } else {
+                lockBoard = true;
+                setTimeout(() => {
+                    firstCell.style.backgroundColor = 'gray';
+                    secondCell.style.backgroundColor = 'gray';
+                    resetTurn();
+                }, 1000);
+            }
+        }
+
+        function resetTurn() {
+            [firstCell, secondCell] = [null, null];
+            lockBoard = false;
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        initializeBoard();
+    </script>
+</body>
+</html>
