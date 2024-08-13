@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magyar Film Kvíz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            height: 100vh;
+            display: block;
+        }
+        ::-webkit-scrollbar {
+           width: 16px;
+           background-color: #333;
+        }
+        ::-webkit-scrollbar-thumb {
+          background-color: #555;
+          border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background-color: #777;
+        }
+       ::-webkit-scrollbar-track {
+         background-color: #222;
+       }
+        .quiztitle {
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            height: 90vh;
+            padding: 5px 15px 15px 15px;            
+            box-sizing: border-box;
+            background-color: #1a1a1a;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .card {
+            background-color: #444;
+            border-radius: 4px;
+            padding: 10px 15px 15px 15px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            position: relative;
+            border: 1px solid transparent;
+        }
+        .card.error {
+            border: 1px solid red;
+        }
+        .card.correct {
+            border: 1px solid green;
+        }
+        .question {
+            margin-bottom: 10px;
+        }
+        .question-title {
+            color: white;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: default;
+        }
+        .option {
+            display: block;
+            margin-bottom: 8px;
+            cursor: default;
+        }
+        .radio-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 20%;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 3px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .radio-button-container {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .radio-button {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+        }
+        .radio-button.disabled {
+            cursor: default;
+        }
+        .radio-button.disabled .radio-button__label {
+            cursor: default;
+        }
+        .radio-button.disabled .radio-button__custom {
+            cursor: default;
+        }
+        .radio-button__input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .radio-button__label {
+            display: flex;
+            align-items: center;
+            padding-left: 25px;
+            position: relative;
+            font-size: 15px;
+            color: #f2f2f2;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .radio-button__custom {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 2px solid #1a1a1a;
+            transition: all 0.3s ease;
+        }
+        .radio-button__input:checked + .radio-button__label .radio-button__custom {
+            background-color: #0059b9;
+        }
+        .radio-button__label:hover .radio-button__custom {
+            transform: scale(1.2);
+            border-color: #1a1a1a;
+        }
+        .radio-button.disabled .radio-button__label:hover .radio-button__custom {
+             transform: none;
+        }
+        .radio-button.correct-answer .radio-button__custom {
+            background-color: green;
+        }
+        .question-number {
+            color: white;
+            text-align: center; 
+            font-weight: 600;
+        }
+            
+    </style>
+</head>
+<body>
+    <div class="quiztitle">Kvíz</div>
+    <div class="container">
+        <form id="quizForm">
+            <div id="q1-card" class="card">
+              <div class="question-number">1. Kérdés</div>
+                <div class="question">
+                    <p class="question-title">Melyik film nyerte el a legjobb magyar film díjat a 2022-es Magyar Filmfesztiválon?</p>
+                </div>
+                <div class="option">A - Félelem és reszketés Budapesten</div>
+                <div class="option">B - Akik maradtak</div>
+                <div class="option">C - Nem eladó</div>
+                <div class="radio-group">
+                    <div class="radio-button-container">
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q1-radio1" name="q1" value="A">
+                            <label class="radio-button__label" for="q1-radio1">
+                                <span class="radio-button__custom"></span>
+                                A
+                            </label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q1-radio2" name="q1" value="B">
+                            <label class="radio-button__label" for="q1-radio2">
+                                <span class="radio-button__custom"></span>
+                                B
+                            </label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q1-radio3" name="q1" value="C">
+                            <label class="radio-button__label" for="q1-radio3">
+                                <span class="radio-button__custom"></span>
+                                C
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="q2-card" class="card">
+              <div class="question-number">2. Kérdés</div>
+                <div class="question">
+                    <p class="question-title">Melyik film rendezője Szabó István?</p>
+                </div>
+                <div class="option">A - Mephisto</div>
+                <div class="option">B - Kontroll</div>
+                <div class="option">C - Aranyember</div>
+                <div class="radio-group">
+                    <div class="radio-button-container">
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q2-radio1" name="q2" value="A">
+                            <label class="radio-button__label" for="q2-radio1">
+                                <span class="radio-button__custom"></span>
+                                A
+                            </label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q2-radio2" name="q2" value="B">
+                            <label class="radio-button__label" for="q2-radio2">
+                                <span class="radio-button__custom"></span>
+                                B
+                            </label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q2-radio3" name="q2" value="C">
+                            <label class="radio-button__label" for="q2-radio3">
+                                <span class="radio-button__custom"></span>
+                                C
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="q3-card" class="card">
+              <div class="question-number">3. Kérdés</div>
+                <div class="question">
+                    <p class="question-title">Melyik filmben szerepel Balsai Móni?</p>
+                </div>
+                <div class="option">A - Szabadság, szerelem</div>
+                <div class="option">B - Rokonok</div>
+                <div class="option">C - Jégvarázs</div>
+                <div class="radio-group">
+                    <div class="radio-button-container">
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q3-radio1" name="q3" value="A">
+                            <label class="radio-button__label" for="q3-radio1">
+                                <span class="radio-button__custom"></span>
+                                A
+                            </label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q3-radio2" name="q3" value="B">
+                            <label class="radio-button__label" for="q3-radio2">
+                                <span class="radio-button__custom"></span>
+                                B
+                            </label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q3-radio3" name="q3" value="C">
+                            <label class="radio-button__label" for="q3-radio3">
+                                <span class="radio-button__custom"></span>
+                                C
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="q4-card" class="card">
+              <div class="question-number">4. Kérdés</div>
+                <div class="question">
+                    <p class="question-title">Melyik film zenéjét szerezte Kortárs Zoltán?</p>
+                </div>
+                <div class="option">A - Tüskevár</div>
+                <div class="option">B - A kőszívű ember fiai</div>
+                <div class="option">C - Aranycsapat</div>
+                <div class="radio-group">
+                    <div class="radio-button-container">
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q4-radio1" name="q4" value="A">
+                            <label class="radio-button__label" for="q4-radio1">
+                                <span class="radio-button__custom"></span>
+                                A
+                            </label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q4-radio2" name="q4" value="B">
+                            <label class="radio-button__label" for="q4-radio2">
+                                <span class="radio-button__custom"></span>
+                                B
+                            </label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q4-radio3" name="q4" value="C">
+                            <label class="radio-button__label" for="q4-radio3">
+                                <span class="radio-button__custom"></span>
+                                C
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="q5-card" class="card">
+              <div class="question-number">5. Kérdés</div>
+                <div class="question">
+                    <p class="question-title">Melyik film alapján készült egy könyv is?</p>
+                </div>
+                <div class="option">A - Török hódítók</div>
+                <div class="option">B - Fekete vonat</div>
+                <div class="option">C - Gyerekrablás a Palánk utcában</div>
+                <div class="radio-group">
+                    <div class="radio-button-container">
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q5-radio1" name="q5" value="A">
+                            <label class="radio-button__label" for="q5-radio1">
+                                <span class="radio-button__custom"></span>
+                                A
+                            </label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q5-radio2" name="q5" value="B">
+                            <label class="radio-button__label" for="q5-radio2">
+                                <span class="radio-button__custom"></span>
+                                B
+                            </label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" class="radio-button__input" id="q5-radio3" name="q5" value="C">
+                            <label class="radio-button__label" for="q5-radio3">
+                                <span class="radio-button__custom"></span>
+                                C
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result" id="result"></div>
+            <div class="error-message" id="error-message" style="display: none;">Kérjük, válaszolj minden kérdésre!</div>
+            <div class="radio-group">
+                <button type="button" id="submitBtn" onclick="submitQuiz()">Küldés</button>
+                <button type="button" id="retryBtn" onclick="resetQuiz()" style="display: none;">Újrakezdés</button>
+                <button type="button" id="solutionsBtn" onclick="showSolutions()" style="display: none;">Megoldások</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        let solutionsViewed = false;
+
+        const correctAnswers = {
+            q1: 'B',
+            q2: 'A',
+            q3: 'A',
+            q4: 'A',
+            q5: 'A'
+        };
+
+        function submitQuiz() {
+            let score = 0;
+            const totalQuestions = 5;
+            let allAnswered = true;
+            let hasError = false;
+            let firstErrorCard = null;
+
+            // Remove previous error classes
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('error'));
+
+            // Hide the error message
+            document.getElementById('error-message').style.display = 'none';
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+                const questionCard = document.getElementById(`q${i}-card`);
+
+                if (!selectedOption) {
+                    allAnswered = false;
+                    hasError = true;
+                    questionCard.classList.add('error');
+                    if (!firstErrorCard) {
+                        firstErrorCard = questionCard;
+                    }
+                } else if (selectedOption.value === correctAnswers[`q${i}`]) {
+                    score++;
+                }
+            }
+
+            if (hasError) {
+                // Scroll to the first error card
+                firstErrorCard.scrollIntoView({ behavior: 'smooth' });
+                // Show the error message
+                document.getElementById('error-message').style.display = 'block';
+            } else {
+                document.getElementById('result').innerText = `Eredmény: ${score}/${totalQuestions}`;
+                // Hide submit button, show retry and solutions buttons
+                document.getElementById('submitBtn').style.display = 'none';
+                document.getElementById('retryBtn').style.display = 'block';
+                document.getElementById('solutionsBtn').style.display = 'block';
+
+                // Scroll to the buttons
+                document.getElementById('retryBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Disable all radio buttons and add the disabled class
+                document.querySelectorAll('.radio-button').forEach(button => button.classList.add('disabled'));
+                document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
+            }
+        }
+
+        function resetQuiz() {
+            // Reset the form
+            document.getElementById('quizForm').reset();
+            // Remove result and error messages
+            document.getElementById('result').innerText = '';
+            document.getElementById('error-message').style.display = 'none';
+            // Hide solutions button, show submit button
+            document.getElementById('submitBtn').style.display = 'block';
+            document.getElementById('retryBtn').style.display = 'none';
+            document.getElementById('solutionsBtn').style.display = 'none';
+            // Enable all radio buttons and remove the disabled class
+            document.querySelectorAll('.radio-button').forEach(button => button.classList.remove('disabled'));
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = false);
+            // Remove previous answer selections
+            document.querySelectorAll('.radio-button').forEach(button => button.classList.remove('hidden'));
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.remove('correct');
+                card.querySelectorAll('.radio-button__input').forEach(input => input.checked = false);
+            });
+            // Remove correct answer highlights
+            document.querySelectorAll('.radio-button.correct-answer').forEach(button => button.classList.remove('correct-answer'));
+            // Reset solutions viewed state
+            solutionsViewed = false;
+        }
+
+        function showSolutions() {
+            // If solutions have already been viewed, do nothing
+            if (solutionsViewed) return;
+
+            // Preserve user-selected answers but uncheck them
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                if (input.checked) {
+                    input.checked = false; // Uncheck selected options
+                }
+            });
+
+            // Show correct answers
+            for (let i = 1; i <= 5; i++) {
+                const correctAnswer = correctAnswers[`q${i}`];
+                const correctRadioButton = document.querySelector(`input[name="q${i}"][value="${correctAnswer}"]`);
+                const correctCard = document.getElementById(`q${i}-card`);
+
+                if (correctRadioButton) {
+                    const correctButton = correctRadioButton.parentElement;
+                    correctButton.classList.add('correct-answer');
+                }
+            }
+
+            // Disable all radio buttons and add the disabled class
+            document.querySelectorAll('.radio-button').forEach(button => button.classList.add('disabled'));
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
+            
+            solutionsViewed = true;
+        }
+    </script>
+</body>
+</html>
