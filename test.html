@@ -88,7 +88,7 @@
 
             if (!firstCell) {
                 firstCell = cell;
-            } else {
+            } else if (!secondCell) {
                 secondCell = cell;
                 checkMatch();
             }
@@ -111,7 +111,8 @@
         }
 
         function resetTurn() {
-            [firstCell, secondCell] = [null, null];
+            firstCell = null;
+            secondCell = null;
             lockBoard = false;
         }
 
@@ -159,3 +160,4 @@
     </script>
 </body>
 </html>
+
