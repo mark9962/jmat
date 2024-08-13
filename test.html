@@ -21,12 +21,35 @@
         .cell.revealed {
             cursor: default;
         }
+        #timer {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        #result {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        #top-scores {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>Párkereső Játék</h1>
+    <div id="timer">Idő: 0 másodperc</div>
     <div class="grid" id="game-board">
         <!-- A mezők itt fognak megjelenni -->
+    </div>
+    <div id="result"></div>
+    <div id="top-scores">
+        <h2>Top 3 Eredmények:</h2>
+        <ul id="score-list">
+            <!-- Top 3 eredmények itt fognak megjelenni -->
+        </ul>
     </div>
     <script>
         const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta'];
@@ -34,6 +57,14 @@
         let firstCell = null;
         let secondCell = null;
         let lockBoard = false;
+        let timerElement = document.getElementById('timer');
+        let resultElement = document.getElementById('result');
+        let topScoresElement = document.getElementById('score-list');
+        let startTime;
+        let elapsedTime = 0;
+        let timerInterval;
+        
+        const MAX_SCORES = 3;
 
         function initializeBoard() {
             let shuffledColors = shuffle(colors.concat(colors));
@@ -44,6 +75,8 @@
                 cell.addEventListener('click', cellClick);
                 board.appendChild(cell);
             }
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
         }
 
         function cellClick(event) {
@@ -66,6 +99,7 @@
                 firstCell.classList.add('revealed');
                 secondCell.classList.add('revealed');
                 resetTurn();
+                checkGameOver();
             } else {
                 lockBoard = true;
                 setTimeout(() => {
@@ -89,7 +123,39 @@
             return array;
         }
 
+        function updateTimer() {
+            elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+            timerElement.textContent = `Idő: ${elapsedTime} másodperc`;
+        }
+
+        function checkGameOver() {
+            const revealedCells = document.querySelectorAll('.cell.revealed');
+            if (revealedCells.length === colors.length * 2) {
+                clearInterval(timerInterval);
+                resultElement.textContent = `Gratulálok! Befejezted ${elapsedTime} másodperc alatt.`;
+                saveScore(elapsedTime);
+                displayTopScores();
+            }
+        }
+
+        function saveScore(time) {
+            let scores = JSON.parse(localStorage.getItem('topScores')) || [];
+            scores.push(time);
+            scores.sort((a, b) => a - b);
+            if (scores.length > MAX_SCORES) {
+                scores = scores.slice(0, MAX_SCORES);
+            }
+            localStorage.setItem('topScores', JSON.stringify(scores));
+        }
+
+        function displayTopScores() {
+            let scores = JSON.parse(localStorage.getItem('topScores')) || [];
+            topScoresElement.innerHTML = scores.map(score => `<li>${score} másodperc</li>`).join('');
+        }
+
+        // Inicializálás
         initializeBoard();
+        displayTopScores();
     </script>
 </body>
 </html>
