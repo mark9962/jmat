@@ -7,7 +7,6 @@
     <style>
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 100px);
             grid-gap: 10px;
             justify-content: center;
             margin-top: 20px;
@@ -36,10 +35,21 @@
             font-size: 20px;
             margin-top: 20px;
         }
+        .difficulty-button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <h1>Párkereső Játék</h1>
+    <div id="difficulty-buttons">
+        <button class="difficulty-button" onclick="setDifficulty(4)">Könnyű (4x4)</button>
+        <button class="difficulty-button" onclick="setDifficulty(6)">Nehéz (6x6)</button>
+        <button class="difficulty-button" onclick="setDifficulty(8)">Nagyon Nehéz (8x8)</button>
+    </div>
     <div id="timer">Idő: 0 másodperc</div>
     <div class="grid" id="game-board">
         <!-- A mezők itt fognak megjelenni -->
@@ -52,7 +62,6 @@
         </ul>
     </div>
     <script>
-        const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta'];
         let board = document.getElementById('game-board');
         let firstCell = null;
         let secondCell = null;
@@ -60,29 +69,48 @@
         let timerElement = document.getElementById('timer');
         let resultElement = document.getElementById('result');
         let topScoresElement = document.getElementById('score-list');
-        let startTime;
+        let startTime = null;
         let elapsedTime = 0;
         let timerInterval;
-        
+        let gridSize = 4;  // Alapértelmezett nehézségi szint (4x4)
+        let numPairs;
+
         const MAX_SCORES = 3;
+        const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta'];
+
+        function setDifficulty(size) {
+            gridSize = size;
+            numPairs = (size * size) / 2;
+            initializeBoard();
+        }
 
         function initializeBoard() {
-            let shuffledColors = shuffle(colors.concat(colors));
-            for (let i = 0; i < shuffledColors.length; i++) {
+            board.innerHTML = '';
+            let shuffledColors = shuffle(colors.slice(0, numPairs).concat(colors.slice(0, numPairs)));
+            board.style.gridTemplateColumns = `repeat(${gridSize}, 100px)`;
+            for (let i = 0; i < gridSize * gridSize; i++) {
                 let cell = document.createElement('div');
                 cell.classList.add('cell');
                 cell.dataset.color = shuffledColors[i];
                 cell.addEventListener('click', cellClick);
                 board.appendChild(cell);
             }
-            startTime = Date.now();
-            timerInterval = setInterval(updateTimer, 1000);
+            startTime = null;
+            elapsedTime = 0;
+            timerElement.textContent = `Idő: 0 másodperc`;
+            resultElement.textContent = '';
+            displayTopScores();
         }
 
         function cellClick(event) {
             if (lockBoard) return;
             let cell = event.target;
             if (cell.classList.contains('revealed')) return;
+
+            if (startTime === null) {
+                startTime = Date.now();
+                timerInterval = setInterval(updateTimer, 1000);
+            }
 
             cell.style.backgroundColor = cell.dataset.color;
 
@@ -111,8 +139,7 @@
         }
 
         function resetTurn() {
-            firstCell = null;
-            secondCell = null;
+            [firstCell, secondCell] = [null, null];
             lockBoard = false;
         }
 
@@ -131,7 +158,7 @@
 
         function checkGameOver() {
             const revealedCells = document.querySelectorAll('.cell.revealed');
-            if (revealedCells.length === colors.length * 2) {
+            if (revealedCells.length === gridSize * gridSize) {
                 clearInterval(timerInterval);
                 resultElement.textContent = `Gratulálok! Befejezted ${elapsedTime} másodperc alatt.`;
                 saveScore(elapsedTime);
@@ -154,9 +181,8 @@
             topScoresElement.innerHTML = scores.map(score => `<li>${score} másodperc</li>`).join('');
         }
 
-        // Inicializálás
+        // Inicializálás alapértelmezett nehézséggel
         initializeBoard();
-        displayTopScores();
     </script>
 </body>
 </html>
