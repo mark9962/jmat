@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmek</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .film-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .film {
+            text-align: center;
+            width: 9%;
+        }
+        .film img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="film-container" id="film-container">
+    <!-- A filmek itt jelennek meg -->
+</div>
+
+<script>
+    const filmek = [
+        { cim: "Film 1", poszter: "poster1.jpg" },
+        { cim: "Film 2", poszter: "poster2.jpg" },
+        { cim: "Film 3", poszter: "poster3.jpg" },
+        { cim: "Film 4", poszter: "poster4.jpg" },
+        { cim: "Film 5", poszter: "poster5.jpg" },
+        { cim: "Film 6", poszter: "poster6.jpg" },
+        { cim: "Film 7", poszter: "poster7.jpg" },
+        { cim: "Film 8", poszter: "poster8.jpg" },
+        { cim: "Film 9", poszter: "poster9.jpg" },
+        { cim: "Film 10", poszter: "poster10.jpg" }
+    ];
+
+    const filmContainer = document.getElementById("film-container");
+
+    filmek.forEach(film => {
+        const filmElement = document.createElement("div");
+        filmElement.className = "film";
+
+        const filmPoster = document.createElement("img");
+        filmPoster.src = film.poszter;
+        filmPoster.alt = film.cim;
+
+        const filmCim = document.createElement("p");
+        filmCim.textContent = film.cim;
+
+        filmElement.appendChild(filmPoster);
+        filmElement.appendChild(filmCim);
+        filmContainer.appendChild(filmElement);
+    });
+</script>
+
+</body>
+</html>
