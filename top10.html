@@ -3,31 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmek</title>
+    <title>Filmek Görgethető Listája</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .film-slider-container {
+            position: relative;
+            width: 90%;
+            overflow: hidden;
         }
         .film-container {
             display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
+            transition: transform 0.5s ease;
             gap: 10px;
         }
         .film {
             text-align: center;
             width: 9%;
+            flex-shrink: 0;
         }
         .film img {
             width: 100%;
             height: auto;
+            border-radius: 8px;
+        }
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1;
+            border-radius: 50%;
+        }
+        .arrow.left {
+            left: 0;
+        }
+        .arrow.right {
+            right: 0;
         }
     </style>
 </head>
 <body>
 
-<div class="film-container" id="film-container">
-    <!-- A filmek itt jelennek meg -->
+<div class="film-slider-container">
+    <button class="arrow left" id="left-arrow">&#9664;</button>
+    <div class="film-container" id="film-container">
+        <!-- A filmek itt jelennek meg -->
+    </div>
+    <button class="arrow right" id="right-arrow">&#9654;</button>
 </div>
 
 <script>
@@ -60,6 +95,20 @@
         filmElement.appendChild(filmPoster);
         filmElement.appendChild(filmCim);
         filmContainer.appendChild(filmElement);
+    });
+
+    let currentPosition = 0;
+    const scrollAmount = 100; // Ezt az értéket igény szerint állíthatod
+    const maxScroll = filmContainer.scrollWidth - filmContainer.clientWidth;
+
+    document.getElementById("left-arrow").addEventListener("click", () => {
+        currentPosition = Math.max(currentPosition - scrollAmount, 0);
+        filmContainer.style.transform = `translateX(-${currentPosition}px)`;
+    });
+
+    document.getElementById("right-arrow").addEventListener("click", () => {
+        currentPosition = Math.min(currentPosition + scrollAmount, maxScroll);
+        filmContainer.style.transform = `translateX(-${currentPosition}px)`;
     });
 </script>
 
