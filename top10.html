@@ -24,15 +24,16 @@
             display: flex;
             transition: transform 0.5s ease;
             gap: 10px;
+            width: max-content;
         }
         .film {
             text-align: center;
-            width: 9%;
+            width: 150px; /* Fix szélesség */
             flex-shrink: 0;
         }
         .film img {
             width: 100%;
-            height: auto;
+            height: 225px; /* Fix magasság, hogy megtartsa az arányokat */
             border-radius: 8px;
         }
         .arrow {
@@ -66,18 +67,7 @@
 </div>
 
 <script>
-    const filmek = [
-        { cim: "Film 1", poszter: "poster1.jpg" },
-        { cim: "Film 2", poszter: "poster2.jpg" },
-        { cim: "Film 3", poszter: "poster3.jpg" },
-        { cim: "Film 4", poszter: "poster4.jpg" },
-        { cim: "Film 5", poszter: "poster5.jpg" },
-        { cim: "Film 6", poszter: "poster6.jpg" },
-        { cim: "Film 7", poszter: "poster7.jpg" },
-        { cim: "Film 8", poszter: "poster8.jpg" },
-        { cim: "Film 9", poszter: "poster9.jpg" },
-        { cim: "Film 10", poszter: "poster10.jpg" }
-    ];
+    const filmek = Array(10).fill({ cim: "Kokainmedve", poszter: "https://image.tmdb.org/t/p/w200//gOnmaxHo0412UVr1QM5Nekv1xPi.jpg" });
 
     const filmContainer = document.getElementById("film-container");
 
@@ -98,7 +88,7 @@
     });
 
     let currentPosition = 0;
-    const scrollAmount = 100; // Ezt az értéket igény szerint állíthatod
+    const scrollAmount = 160; // Az érték igazítva a fix elem szélességhez
     const maxScroll = filmContainer.scrollWidth - filmContainer.clientWidth;
 
     document.getElementById("left-arrow").addEventListener("click", () => {
