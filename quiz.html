@@ -546,125 +546,163 @@
             </div>
         </form>
     </div>
-    <script>
-        let solutionsViewed = false;
+ <script>
+    // Firebase konfigurációs objektum
+    const firebaseConfig = {
+        apiKey: "AIzaSyArLlPwLgoa1P8-LoGv1J3elh-6Jo25kh0",
+        authDomain: "jmat-quez.firebaseapp.com",
+        projectId: "jmat-quez",
+        storageBucket: "jmat-quez.appspot.com",
+        messagingSenderId: "821975962389",
+        appId: "1:821975962389:web:cbf520ac58abe78c2f4f1c",
+        measurementId: "G-H30HH5RCWR"
+    };
 
-        const correctAnswers = {
-            q1: 'B',
-            q2: 'A',
-            q3: 'A',
-            q4: 'A',
-            q5: 'C',
-            q6: 'A',
-            q7: 'B',
-            q8: 'C',
-            q9: 'C',
-            q10: 'B'
-        };
+    // Inicializáljuk a Firebase-t
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-        function submitQuiz() {
-            let score = 0;
-            const totalQuestions = 10;
-            let allAnswered = true;
-            let hasError = false;
-            let firstErrorCard = null;
+    // Kérdések helyes válaszai
+    const correctAnswers = {
+        q1: 'B',
+        q2: 'A',
+        q3: 'A',
+        q4: 'A',
+        q5: 'C',
+        q6: 'A',
+        q7: 'B',
+        q8: 'C',
+        q9: 'C',
+        q10: 'B'
+    };
 
-            // Remove previous error classes
-            document.querySelectorAll('.card').forEach(card => card.classList.remove('error'));
+    // Funkció a kitöltési szám frissítésére
+    async function updateSubmissionCount() {
+        try {
+            const countDoc = await db.collection('quizStats').doc('submissionCount').get();
+            let count = countDoc.exists ? countDoc.data().count : 0;
+            count++;
+            await db.collection('quizStats').doc('submissionCount').set({ count: count });
+            document.getElementById('submissionCount').innerText = `A kvíz ${count} alkalommal lett kitöltve.`;
+        } catch (error) {
+            console.error("Hiba a kitöltési szám frissítésekor: ", error);
+        }
+    }
 
-            // Hide the error message
-            document.getElementById('error-message').style.display = 'none';
+    // Funkció a kvíz beküldésére
+    function submitQuiz() {
+        let score = 0;
+        const totalQuestions = 10;
+        let allAnswered = true;
+        let hasError = false;
+        let firstErrorCard = null;
 
-            for (let i = 1; i <= totalQuestions; i++) {
-                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
-                const questionCard = document.getElementById(`q${i}-card`);
+        // Előző hiba osztályok eltávolítása
+        document.querySelectorAll('.card').forEach(card => card.classList.remove('error'));
 
-                if (!selectedOption) {
-                    allAnswered = false;
-                    hasError = true;
-                    questionCard.classList.add('error');
-                    if (!firstErrorCard) {
-                        firstErrorCard = questionCard;
-                    }
-                } else if (selectedOption.value === correctAnswers[`q${i}`]) {
-                    score++;
+        // Hibaüzenet elrejtése
+        document.getElementById('error-message').style.display = 'none';
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+            const questionCard = document.getElementById(`q${i}-card`);
+
+            if (!selectedOption) {
+                allAnswered = false;
+                hasError = true;
+                questionCard.classList.add('error');
+                if (!firstErrorCard) {
+                    firstErrorCard = questionCard;
                 }
-            }
-
-            if (hasError) {
-                // Scroll to the first error card
-                firstErrorCard.scrollIntoView({ behavior: 'smooth' });
-                // Show the error message
-                document.getElementById('error-message').style.display = 'block';
-            } else {
-                document.getElementById('result').innerText = `Eredmény: ${score}/${totalQuestions}`;
-                // Hide submit button, show retry and solutions buttons
-                document.getElementById('submitBtn').style.display = 'none';
-                document.getElementById('retryBtn').style.display = 'block';
-                document.getElementById('solutionsBtn').style.display = 'block';
-
-                // Scroll to the buttons
-                document.getElementById('retryBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                // Disable all radio buttons and add the disabled class
-                document.querySelectorAll('.radio-button').forEach(button => button.classList.add('disabled'));
-                document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
+            } else if (selectedOption.value === correctAnswers[`q${i}`]) {
+                score++;
             }
         }
 
-        function resetQuiz() {
-            // Reset the form
-            document.getElementById('quizForm').reset();
-            // Remove result and error messages
-            document.getElementById('result').innerText = '';
-            document.getElementById('error-message').style.display = 'none';
-            // Hide solutions button, show submit button
-            document.getElementById('submitBtn').style.display = 'block';
-            document.getElementById('retryBtn').style.display = 'none';
-            document.getElementById('solutionsBtn').style.display = 'none';
-            // Enable all radio buttons and remove the disabled class
-            document.querySelectorAll('.radio-button').forEach(button => button.classList.remove('disabled'));
-            document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = false);
-            // Remove previous answer selections
-            document.querySelectorAll('.radio-button').forEach(button => button.classList.remove('hidden'));
-            document.querySelectorAll('.card').forEach(card => {
-                card.classList.remove('correct');
-                card.querySelectorAll('.radio-button__input').forEach(input => input.checked = false);
-            });
-            // Remove correct answer highlights
-            document.querySelectorAll('.radio-button.correct-answer').forEach(button => button.classList.remove('correct-answer'));
-            // Reset solutions viewed state
-            solutionsViewed = false;
-        }
+        if (hasError) {
+            // Görgetés az első hiba kártyához
+            firstErrorCard.scrollIntoView({ behavior: 'smooth' });
+            // Hibaüzenet megjelenítése
+            document.getElementById('error-message').style.display = 'block';
+        } else {
+            document.getElementById('result').innerText = `Eredmény: ${score}/${totalQuestions}`;
+            // Küldés gomb elrejtése, próbálkozás és megoldások gombok megjelenítése
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('retryBtn').style.display = 'block';
+            document.getElementById('solutionsBtn').style.display = 'block';
 
-        function showSolutions() {
-            // If solutions have already been viewed, do nothing
-            if (solutionsViewed) return;
-
-            // Preserve user-selected answers but uncheck them
-            document.querySelectorAll('input[type="radio"]').forEach(input => {
-                if (input.checked) {
-                    input.checked = false; // Uncheck selected options
-                }
-            });
-
-            // Show correct answers
-            for (let i = 1; i <= 10; i++) {
-                const correctAnswer = correctAnswers[`q${i}`];
-                const correctRadioButton = document.querySelector(`input[name="q${i}"][value="${correctAnswer}"]`);
-                const correctCard = document.getElementById(`q${i}-card`);
-
-                if (correctRadioButton) {
-                    const correctButton = correctRadioButton.parentElement;
-                    correctButton.classList.add('correct-answer');
-                }
-            }
-
-            // Disable all radio buttons and add the disabled class
+            // Görgetés a gombokhoz
+            document.getElementById('retryBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Minden rádiógomb letiltása és a 'disabled' osztály hozzáadása
             document.querySelectorAll('.radio-button').forEach(button => button.classList.add('disabled'));
             document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
-            
-            solutionsViewed = true;
         }
-    </script>
+
+        updateSubmissionCount(); // Hívjuk meg a kitöltési szám frissítését
+    }
+
+    // Funkció a kvíz alaphelyzetbe állítására
+    function resetQuiz() {
+        // Űrlap visszaállítása
+        document.getElementById('quizForm').reset();
+        document.getElementById('result').innerText = '';
+        document.getElementById('error-message').style.display = 'none';
+
+        // Küldés gomb megjelenítése, próbálkozás és megoldások gombok elrejtése
+        document.getElementById('submitBtn').style.display = 'block';
+        document.getElementById('retryBtn').style.display = 'none';
+        document.getElementById('solutionsBtn').style.display = 'none';
+
+        // Minden rádiógomb engedélyezése és a 'disabled' osztály eltávolítása
+        document.querySelectorAll('.radio-button').forEach(button => button.classList.remove('disabled'));
+        document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = false);
+        // Előző válaszok eltávolítása
+        document.querySelectorAll('.radio-button').forEach(button => button.classList.remove('hidden'));
+        document.querySelectorAll('.card').forEach(card => {
+            card.classList.remove('correct');
+            card.querySelectorAll('.radio-button__input').forEach(input => input.checked = false);
+        });
+        // Helyes válaszok kiemelésének eltávolítása
+        document.querySelectorAll('.radio-button.correct-answer').forEach(button => button.classList.remove('correct-answer'));
+        // Megoldások megtekintésének állapotának visszaállítása
+        solutionsViewed = false;
+    }
+
+    // Funkció a megoldások megjelenítésére
+    let solutionsViewed = false;
+
+    function showSolutions() {
+        // Ha a megoldásokat már megtekintettük, ne csináljunk semmit
+        if (solutionsViewed) return;
+
+        // Felhasználó által kiválasztott válaszok megőrzése, de eltávolítjuk őket
+        document.querySelectorAll('input[type="radio"]').forEach(input => {
+            if (input.checked) {
+                input.checked = false; // Kiválasztott opciók törlése
+            }
+        });
+
+        // Helyes válaszok megjelenítése
+        for (let i = 1; i <= 10; i++) {
+            const correctAnswer = correctAnswers[`q${i}`];
+            const correctRadioButton = document.querySelector(`input[name="q${i}"][value="${correctAnswer}"]`);
+            const correctCard = document.getElementById(`q${i}-card`);
+
+            if (correctRadioButton) {
+                const correctButton = correctRadioButton.parentElement;
+                correctButton.classList.add('correct-answer');
+            }
+        }
+
+        // Minden rádiógomb letiltása és a 'disabled' osztály hozzáadása
+        document.querySelectorAll('.radio-button').forEach(button => button.classList.add('disabled'));
+        document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
+        
+        solutionsViewed = true;
+    }
+
+    // Kezdeti kitöltési szám megjelenítése
+    updateSubmissionCount();
+</script>
 </body>
 </html>
