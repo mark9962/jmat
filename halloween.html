@@ -41,6 +41,12 @@
             color: #333;
             position: relative;
             padding: 10px; /* Párnázás a kártyákban */
+            transition: transform 0.3s, box-shadow 0.3s; /* Animációs hatás */
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* Kártya kiemelése */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Erősebb árnyék */
         }
 
         .card::before {
@@ -50,9 +56,15 @@
             left: 10px;
             background-color: #ff4757;
             color: white;
-            padding: 5px 10px;
+            padding: 10px; /* Párnázás a számok körül */
             border-radius: 50%;
             font-weight: bold;
+            font-size: 2rem; /* Nagyobb méret */
+            transition: transform 0.3s; /* Animációs hatás a számoknál */
+        }
+
+        .card:hover::before {
+            transform: scale(1.2); /* Szám kiemelése */
         }
     </style>
 </head>
@@ -75,4 +87,3 @@
     </script>
 </body>
 </html>
-
