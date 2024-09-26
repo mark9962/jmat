@@ -36,7 +36,6 @@
         }
 
         .card {
-            min-width: 150px;
             min-height: 100px; /* Kártyák magasságának csökkentése */
             background-color: #2a2a2a; /* Sötét kártya háttér */
             border-radius: 10px;
@@ -50,6 +49,7 @@
         }
 
         .rank {
+            width: 1000px; /* A sorszám kártyája 1 méter széles */
             background: linear-gradient(135deg, #444, #777); /* Sötét színátmenet */
             color: white;
             padding: 10px; /* Párnázás a számok körül */
@@ -71,6 +71,7 @@
 
         .card div {
             color: #f0f0f0; /* Világos szín a címeknek */
+            flex-grow: 1; /* A film címje a maradék helyet foglalja el */
         }
 
         /* Görgetősáv stílus */
@@ -136,4 +137,3 @@
     </script>
 </body>
 </html>
-
