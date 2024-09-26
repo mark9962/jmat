@@ -36,33 +36,21 @@
         }
 
         .card {
-            min-height: 100px; /* Kártyák magasságának csökkentése */
+            min-height: 150px; /* Kártyák magasságának beállítása */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Erősebb árnyék */
             display: flex;
-            align-items: center; /* Középre igazítás */
+            align-items: flex-end; /* Alulra igazítás */
             position: relative;
             padding: 10px; /* Párnázás a kártyákban */
             transition: transform 0.3s, box-shadow 0.3s; /* Animációs hatás */
             cursor: pointer; /* Pointer kurzor */
             overflow: hidden; /* Elrejti a túlcsorduló tartalmat */
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
             background: url('https://jobbmintatv.pro/borito/sorozat/image1.jpg') no-repeat center center; /* Példa háttérkép */
             background-size: cover; /* A háttérkép lefedje a kártyát */
-            opacity: 1; /* Kezdeti átlátszóság */
-            transition: opacity 0.3s; /* Átlátszóság animációja */
         }
 
-        .card::after {
-            content: '';
+        .gradient {
             position: absolute;
             top: 0;
             left: 0;
@@ -85,6 +73,8 @@
             justify-content: center; /* Center horizontally */
             align-items: center; /* Center vertically */
             transition: transform 0.3s; /* Animation effect */
+            z-index: 2; /* Z-index a szöveg fölé helyezéséhez */
+            position: relative; /* Hozzáadva a relatív pozicionáláshoz */
         }
 
         .card:hover {
@@ -118,43 +108,53 @@
 <body>
     <div class="carousel">
         <h1>Top 10 Halloweeni Film</h1>
-        <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/Amikor_a_gonosz_leselkedik_big.jpg');">
+        <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image1.jpg');">
+            <div class="gradient"></div>
             <div class="rank">10</div>
             <div>Film Cím 10</div>
         </div>
         <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image2.jpg');">
+            <div class="gradient"></div>
             <div class="rank">9</div>
             <div>Film Cím 9</div>
         </div>
         <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image3.jpg');">
+            <div class="gradient"></div>
             <div class="rank">8</div>
             <div>Film Cím 8</div>
         </div>
         <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image4.jpg');">
+            <div class="gradient"></div>
             <div class="rank">7</div>
             <div>Film Cím 7</div>
         </div>
         <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image5.jpg');">
+            <div class="gradient"></div>
             <div class="rank">6</div>
             <div>Film Cím 6</div>
         </div>
         <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image6.jpg');">
+            <div class="gradient"></div>
             <div class="rank">5</div>
             <div>Film Cím 5</div>
         </div>
         <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image7.jpg');">
+            <div class="gradient"></div>
             <div class="rank">4</div>
             <div>Film Cím 4</div>
         </div>
         <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image8.jpg');">
+            <div class="gradient"></div>
             <div class="rank">3</div>
             <div>Film Cím 3</div>
         </div>
         <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image9.jpg');">
+            <div class="gradient"></div>
             <div class="rank">2</div>
             <div>Film Cím 2</div>
         </div>
         <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image10.jpg');">
+            <div class="gradient"></div>
             <div class="rank">1</div>
             <div>Film Cím 1</div>
         </div>
