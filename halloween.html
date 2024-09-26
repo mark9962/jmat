@@ -4,50 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top 10 Halloweeni Film</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"> <!-- Betűtípus betöltése -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #121212; /* Sötét háttér */
-            font-family: 'Poppins', sans-serif; /* Poppins betűtípus használata */
-            overflow: hidden; /* Elrejti az oldalsó görgetést */
+            background-color: #121212;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
         }
 
         .carousel {
             display: flex;
-            flex-direction: column; /* Függőleges elrendezés */
-            overflow-y: auto; /* Függőleges görgetés */
-            max-height: 80vh; /* Maximális magasság a görgetéshez */
+            flex-direction: column;
+            overflow-y: auto;
+            max-height: 80vh;
             padding: 0px 20px 10px 20px;
             gap: 10px;
-            border: 1px solid #444; /* Határvonal a kártyák körül */
-            border-radius: 5px; /* Kerekített sarkok */
-            background-color: #1c1c1c; /* Sötét háttér a kártyák körül */
-            width: 300px; /* Szélesség beállítása */
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #1c1c1c;
+            width: 300px;
         }
 
         h1 {
-            color: #f0f0f0; /* Világos szín a címnek */
-            margin-bottom: 20px; /* Térköz a cím és a kártyák között */
-            text-align: center; /* Középre igazítás */
+            color: #f0f0f0;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         .card {
-            min-height: 150px; /* Kártyák magasságának beállítása */
+            min-height: 150px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Erősebb árnyék */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
             display: flex;
-            align-items: flex-end; /* Alulra igazítás */
+            align-items: flex-end;
             position: relative;
-            padding: 10px; /* Párnázás a kártyákban */
-            transition: transform 0.3s, box-shadow 0.3s; /* Animációs hatás */
-            cursor: pointer; /* Pointer kurzor */
-            overflow: hidden; /* Elrejti a túlcsorduló tartalmat */
-            background: url('https://jobbmintatv.pro/borito/sorozat/image1.jpg') no-repeat center center; /* Példa háttérkép */
-            background-size: cover; /* A háttérkép lefedje a kártyát */
+            padding: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+            background-size: cover;
+            text-decoration: none; /* Remove underline from links */
+            color: #f0f0f0; /* Color for the text */
         }
 
         .gradient {
@@ -56,43 +57,37 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); /* Átmenet */
-            z-index: 1; /* A gradient overlay legyen a háttérkép felett */
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+            z-index: 1;
         }
 
         .rank {
-            width: 50px; /* Width of the rank box */
-            height: 50px; /* Set a fixed height to align vertically */
-            background: linear-gradient(135deg, #444, #777); /* Dark gradient background */
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #444, #777);
             color: white;
-            border-radius: 5px; /* Rounded corners */
+            border-radius: 5px;
             font-weight: bold;
-            font-size: 2rem; /* Larger font size */
-            margin-right: 10px; /* Space between rank and title */
-            display: flex; /* Enable flexbox */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            transition: transform 0.3s; /* Animation effect */
-            z-index: 2; /* Z-index a szöveg fölé helyezéséhez */
-            position: relative; /* Hozzáadva a relatív pozicionáláshoz */
+            font-size: 2rem;
+            margin-right: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s;
+            z-index: 2;
+            position: relative;
         }
 
         .card:hover {
-            transform: scale(1.05); /* Kártya kiemelése */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Erősebb árnyék */
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
         }
 
         .card:hover .rank {
-            transform: scale(1.2); /* Szám kiemelése */
+            transform: scale(1.2);
         }
 
-        .card div {
-            color: #f0f0f0; /* Világos szín a címeknek */
-            z-index: 2; /* Z-index a szöveg fölé helyezéséhez */
-            position: relative; /* Hozzáadva a relatív pozicionáláshoz */
-        }
-
-        /* Görgetősáv stílus */
+        /* Scrollbar style */
         ::-webkit-scrollbar {
             width: 15px; 
         }
@@ -108,60 +103,60 @@
 <body>
     <div class="carousel">
         <h1>Top 10 Halloweeni Film</h1>
-        <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/Amikor_a_gonosz_leselkedik_big.jpg');">
+        <a href="link_to_movie_10.html" class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/Amikor_a_gonosz_leselkedik_big.jpg');">
             <div class="gradient"></div>
             <div class="rank">10</div>
             <div>Amikor a gonosz leselkedik</div>
-        </div>
-        <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image2.jpg');">
+        </a>
+        <a href="link_to_movie_9.html" class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image2.jpg');">
             <div class="gradient"></div>
             <div class="rank">9</div>
             <div>Film Cím 9</div>
-        </div>
-        <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image3.jpg');">
+        </a>
+        <a href="link_to_movie_8.html" class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image3.jpg');">
             <div class="gradient"></div>
             <div class="rank">8</div>
             <div>Film Cím 8</div>
-        </div>
-        <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image4.jpg');">
+        </a>
+        <a href="link_to_movie_7.html" class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image4.jpg');">
             <div class="gradient"></div>
             <div class="rank">7</div>
             <div>Film Cím 7</div>
-        </div>
-        <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image5.jpg');">
+        </a>
+        <a href="link_to_movie_6.html" class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image5.jpg');">
             <div class="gradient"></div>
             <div class="rank">6</div>
             <div>Film Cím 6</div>
-        </div>
-        <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image6.jpg');">
+        </a>
+        <a href="link_to_movie_5.html" class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image6.jpg');">
             <div class="gradient"></div>
             <div class="rank">5</div>
             <div>Film Cím 5</div>
-        </div>
-        <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image7.jpg');">
+        </a>
+        <a href="link_to_movie_4.html" class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image7.jpg');">
             <div class="gradient"></div>
             <div class="rank">4</div>
             <div>Film Cím 4</div>
-        </div>
-        <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image8.jpg');">
+        </a>
+        <a href="link_to_movie_3.html" class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image8.jpg');">
             <div class="gradient"></div>
             <div class="rank">3</div>
             <div>Film Cím 3</div>
-        </div>
-        <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image9.jpg');">
+        </a>
+        <a href="link_to_movie_2.html" class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image9.jpg');">
             <div class="gradient"></div>
             <div class="rank">2</div>
             <div>Film Cím 2</div>
-        </div>
-        <div class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image10.jpg');">
+        </a>
+        <a href="link_to_movie_1.html" class="card" style="background-image: url('https://jobbmintatv.pro/borito/sorozat/image10.jpg');">
             <div class="gradient"></div>
             <div class="rank">1</div>
             <div>Film Cím 1</div>
-        </div>
+        </a>
     </div>
     <script>
-        // Jelenleg nincs szükség külön JavaScript kódra a körgetéshez, 
-        // de itt bővíthetjük a funkciókat a jövőbeli igényeknek megfelelően.
+        // Currently, there's no need for additional JavaScript for scrolling,
+        // but we can expand the functionalities based on future needs.
     </script>
 </body>
 </html>
