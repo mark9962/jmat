@@ -48,17 +48,21 @@
             cursor: pointer; /* Pointer kurzor */
         }
 
-        .rank {
-            width: 30px; /* A sorszám kártyája 1 méter széles */
-            background: linear-gradient(135deg, #444, #777); /* Sötét színátmenet */
-            color: white;
-            padding: 10px; /* Párnázás a számok körül */
-            border-radius: 5px; /* Kerekített sarkok a számok háttérén */
-            font-weight: bold;
-            font-size: 2rem; /* Nagyobb méret */
-            margin-right: 10px; /* Térköz a szám és a cím között */
-            transition: transform 0.3s; /* Animációs hatás a számoknál */
-        }
+.rank {
+    width: 30px; /* Width of the rank box */
+    height: 30px; /* Set a fixed height to align vertically */
+    background: linear-gradient(135deg, #444, #777); /* Dark gradient background */
+    color: white;
+    border-radius: 5px; /* Rounded corners */
+    font-weight: bold;
+    font-size: 2rem; /* Larger font size */
+    margin-right: 10px; /* Space between rank and title */
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    transition: transform 0.3s; /* Animation effect */
+}
+
 
         .card:hover {
             transform: scale(1.05); /* Kártya kiemelése */
