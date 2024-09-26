@@ -36,18 +36,11 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
-            flex-direction: column; /* Függőleges elrendezés a kártyákon belül */
-            justify-content: center;
-            align-items: center;
+            align-items: center; /* Középre igazítás */
             position: relative;
             padding: 10px; /* Párnázás a kártyákban */
             transition: transform 0.3s, box-shadow 0.3s; /* Animációs hatás */
             cursor: pointer; /* Pointer kurzor */
-        }
-
-        .card:hover {
-            transform: scale(1.05); /* Kártya kiemelése */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Erősebb árnyék */
         }
 
         .rank {
@@ -57,7 +50,13 @@
             border-radius: 5px; /* Kerekített sarkok a számok háttérén */
             font-weight: bold;
             font-size: 2rem; /* Nagyobb méret */
+            margin-right: 10px; /* Térköz a szám és a cím között */
             transition: transform 0.3s; /* Animációs hatás a számoknál */
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* Kártya kiemelése */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Erősebb árnyék */
         }
 
         .card:hover .rank {
