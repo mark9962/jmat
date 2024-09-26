@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Körgethető Kártyasáv</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"> <!-- Betűtípus betöltése -->
     <style>
         body {
             display: flex;
@@ -11,7 +12,7 @@
             align-items: center;
             height: 100vh;
             background-color: #1c1c1c;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Poppins', sans-serif; /* Poppins betűtípus használata */
             overflow: hidden; /* Elrejti az oldalsó görgetést */
         }
 
@@ -35,13 +36,13 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
+            flex-direction: column; /* Függőleges elrendezés a kártyákon belül */
             justify-content: center;
             align-items: center;
-            font-size: 1.2rem;
-            color: #333;
             position: relative;
             padding: 10px; /* Párnázás a kártyákban */
             transition: transform 0.3s, box-shadow 0.3s; /* Animációs hatás */
+            cursor: pointer; /* Pointer kurzor */
         }
 
         .card:hover {
@@ -49,37 +50,63 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Erősebb árnyék */
         }
 
-        .card::before {
-            content: attr(data-rank);
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #ff4757;
+        .rank {
+            background: linear-gradient(135deg, #333, #666); /* Sötét színátmenet */
             color: white;
             padding: 10px; /* Párnázás a számok körül */
-            border-radius: 50%;
+            border-radius: 5px; /* Kerekített sarkok a számok háttérén */
             font-weight: bold;
             font-size: 2rem; /* Nagyobb méret */
             transition: transform 0.3s; /* Animációs hatás a számoknál */
         }
 
-        .card:hover::before {
+        .card:hover .rank {
             transform: scale(1.2); /* Szám kiemelése */
         }
     </style>
 </head>
 <body>
     <div class="carousel">
-        <div class="card" data-rank="1">1. Film Cím 1</div>
-        <div class="card" data-rank="2">2. Film Cím 2</div>
-        <div class="card" data-rank="3">3. Film Cím 3</div>
-        <div class="card" data-rank="4">4. Film Cím 4</div>
-        <div class="card" data-rank="5">5. Film Cím 5</div>
-        <div class="card" data-rank="6">6. Film Cím 6</div>
-        <div class="card" data-rank="7">7. Film Cím 7</div>
-        <div class="card" data-rank="8">8. Film Cím 8</div>
-        <div class="card" data-rank="9">9. Film Cím 9</div>
-        <div class="card" data-rank="10">10. Film Cím 10</div>
+        <div class="card">
+            <div class="rank">1</div>
+            <div>Film Cím 1</div>
+        </div>
+        <div class="card">
+            <div class="rank">2</div>
+            <div>Film Cím 2</div>
+        </div>
+        <div class="card">
+            <div class="rank">3</div>
+            <div>Film Cím 3</div>
+        </div>
+        <div class="card">
+            <div class="rank">4</div>
+            <div>Film Cím 4</div>
+        </div>
+        <div class="card">
+            <div class="rank">5</div>
+            <div>Film Cím 5</div>
+        </div>
+        <div class="card">
+            <div class="rank">6</div>
+            <div>Film Cím 6</div>
+        </div>
+        <div class="card">
+            <div class="rank">7</div>
+            <div>Film Cím 7</div>
+        </div>
+        <div class="card">
+            <div class="rank">8</div>
+            <div>Film Cím 8</div>
+        </div>
+        <div class="card">
+            <div class="rank">9</div>
+            <div>Film Cím 9</div>
+        </div>
+        <div class="card">
+            <div class="rank">10</div>
+            <div>Film Cím 10</div>
+        </div>
     </div>
     <script>
         // Jelenleg nincs szükség külön JavaScript kódra a körgetéshez, 
@@ -87,3 +114,4 @@
     </script>
 </body>
 </html>
+
