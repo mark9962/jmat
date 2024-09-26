@@ -16,15 +16,19 @@
 
         .carousel {
             display: flex;
-            overflow-x: auto;
-            scroll-behavior: smooth;
+            flex-direction: column; /* Függőleges elrendezés */
+            overflow-y: auto; /* Függőleges görgetés */
+            max-height: 80vh; /* Maximális magasság a görgetéshez */
             padding: 20px;
             gap: 10px;
+            border: 1px solid #ccc; /* Határvonal a kártyák körül */
+            border-radius: 10px; /* Kerekített sarkok */
+            background-color: #fff; /* Fehér háttér a kártyák körül */
         }
 
         .card {
             min-width: 150px;
-            min-height: 200px;
+            min-height: 100px; /* Kártyák magasságának csökkentése */
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -34,6 +38,7 @@
             font-size: 1.2rem;
             color: #333;
             position: relative;
+            padding: 10px; /* Párnázás a kártyákban */
         }
 
         .card::before {
