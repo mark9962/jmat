@@ -50,10 +50,27 @@
             cursor: pointer;
             overflow: hidden;
             background-size: cover;
-            text-decoration: none; /* Remove underline from links */
-            color: #f0f0f0; /* Color for the text */
+            text-decoration: none;
+            color: #f0f0f0; 
         }
-
+        
+        .card_1 {
+            min-height: 150px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            padding: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+            background-size: cover;
+            text-decoration: none; 
+            color: #f0f0f0; 
+            margin-top: 10px;
+        }
+        
         .gradient {
             position: absolute;
             top: 0;
@@ -140,8 +157,7 @@
         .card:hover .rank {
             transform: scale(1.2);
         }
-
-        /* Scrollbar style */
+        
         ::-webkit-scrollbar {
             width: 15px; 
         }
