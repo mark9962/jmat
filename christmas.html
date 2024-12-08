@@ -4,155 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top 10 Christmas Movies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Snowflakes styling */
-        .snowflake {
+        /* Body styling with dark theme */
+        body {
+            background-color: #121212;
             color: #fff;
-            font-size: 1em;
-            font-family: Arial, sans-serif;
-            text-shadow: 0 0 5px #000;
-        }
-        
-        .snowflake, .snowflake .inner {
-            animation-iteration-count: infinite;
-            animation-play-state: running;
-        }
-        
-        @keyframes snowflakes-fall {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(110vh);
-            }
-        }
-        
-        @keyframes snowflakes-shake {
-            0%, 100% {
-                transform: translateX(0);
-            }
-            50% {
-                transform: translateX(80px);
-            }
-        }
-        
-        .snowflake {
-            position: fixed;
-            top: -10%;
-            z-index: 9999;
-            -webkit-user-select: none;
-            user-select: none;
-            cursor: default;
-            animation-name: snowflakes-shake;
-            animation-duration: 3s;
-            animation-timing-function: ease-in-out;
-        }
-        
-        .snowflake .inner {
-            animation-duration: 10s;
-            animation-name: snowflakes-fall;
-            animation-timing-function: linear;
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
         }
 
-        .snowflake:nth-of-type(1) {
-            left: 1%;
-            animation-delay: 0s;
-        }
-
-        .snowflake:nth-of-type(2) {
-            left: 10%;
-            animation-delay: 1s;
-        }
-
-        .snowflake:nth-of-type(3) {
-            left: 20%;
-            animation-delay: 0.5s;
-        }
-
-        .snowflake:nth-of-type(4) {
-            left: 30%;
-            animation-delay: 2s;
-        }
-
-        .snowflake:nth-of-type(5) {
-            left: 40%;
-            animation-delay: 2s;
-        }
-
-        .snowflake:nth-of-type(6) {
-            left: 50%;
-            animation-delay: 3s;
-        }
-
-        .snowflake:nth-of-type(7) {
-            left: 60%;
-            animation-delay: 2s;
-        }
-
-        .snowflake:nth-of-type(8) {
-            left: 70%;
-            animation-delay: 1s;
-        }
-
-        .snowflake:nth-of-type(9) {
-            left: 80%;
-            animation-delay: 0s;
-        }
-
-        .snowflake:nth-of-type(10) {
-            left: 90%;
-            animation-delay: 1.5s;
-        }
-
-        .snowflake:nth-of-type(11) {
-            left: 25%;
-            animation-delay: 0s;
-        }
-
-        .snowflake:nth-of-type(12) {
-            left: 65%;
-            animation-delay: 2.5s;
-        }
-        
         /* Container for the card layout */
         .card-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
             gap: 20px;
-            margin-top: 100px; /* Push the cards down to avoid overlap with the snow */
-            z-index: 1; /* Make sure cards are above the snowflakes */
+            margin-top: 50px;
         }
 
         /* Styling for individual movie cards */
         .movie-card {
             position: relative;
-            width: 200px;
-            height: 300px;
+            width: 300px;
+            height: 180px;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             background-size: cover;
             background-position: center;
             display: flex;
             justify-content: flex-end;
-            align-items: flex-start;
+            align-items: flex-end;
             text-align: center;
             color: white;
             padding: 10px;
-            transition: transform 0.3s ease-in-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
 
         /* Hover effect to slightly enlarge the card */
         .movie-card:hover {
             transform: scale(1.05);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8);
         }
 
         /* Title styling for the movie name */
         .movie-card h3 {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 22px;
+            font-weight: 600;
             margin: 0;
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
         }
 
         /* Bottom section for movie titles */
@@ -161,54 +64,23 @@
             bottom: 10px;
             left: 10px;
             right: 10px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             padding: 5px;
             border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Additional styling for the page title */
+        h1 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-top: 20px;
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
         }
     </style>
 </head>
 <body>
-    <h1 style="text-align:center; margin-top:20px;">Top 10 Christmas Movies</h1>
-    
-    <!-- Snowflakes falling effect -->
-    <div class="snowflakes" aria-hidden="true">
-        <div class="snowflake">
-            <div class="inner">❅</div>
-        </div>
-        <div class="snowflake">
-            <div class="inner">❅</div>
-        </div>
-        <div class="snowflake">
-            <div class="inner">❅</div>
-        </div>
-        <div class="snowflake">
-            <div class="inner">❅</div>
-        </div>
-        <div class="snowflake">
-            <div class="inner">❅</div>
-        </div>
-        <div class="snowflake">
-            <div class="inner">❅</div>
-        </div>
-        <div class="snowflake">
-            <div class="inner">❅</div>
-        </div>
-        <div class="snowflake">
-            <div class="inner">❅</div>
-        </div>
-        <div class="snowflake">
-            <div class="inner">❅</div>
-        </div>
-        <div class="snowflake">
-            <div class="inner">❅</div>
-        </div>
-        <div class="snowflake">
-            <div class="inner">❅</div>
-        </div>
-        <div class="snowflake">
-            <div class="inner">❅</div>
-        </div>
-    </div>
+    <h1>Top 10 Christmas Movies</h1>
 
     <!-- Movie cards -->
     <div class="card-container">
@@ -284,3 +156,4 @@
     </div>
 </body>
 </html>
+
