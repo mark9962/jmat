@@ -90,12 +90,11 @@
             box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8);
         }
 
-                /* Hover effect to slightly enlarge the card */
+        /* Hover effect to slightly enlarge the card */
         .movie-card-1:hover {
             transform: scale(1.05);
             box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8);
         }
-
 
         /* Title styling for the movie name */
         .movie-card h3 {
@@ -103,6 +102,7 @@
             font-weight: 600;
             margin: 0;
             text-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+            text-align: center;  /* Center the text horizontally */
         }
 
         /* Bottom section for movie titles */
@@ -112,19 +112,24 @@
             left: 10px;
             right: 10px;
             background: rgba(0, 0, 0, 0.6);
-            padding: 5px;
+            padding: 10px;
             border-radius: 5px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            height: 40px;  /* Fixed height for consistency */
+            display: flex;
+            justify-content: center;  /* Horizontally center the text */
+            align-items: center;  /* Vertically center the text */
         }
+
         .main-title {
             margin-top: 10px;
             font-size: 20px;
-           font-weight: 600;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
-        <div class="main-title">10 Karácsonyi film</div>
+    <div class="main-title">10 Karácsonyi film</div>
     <!-- Movie cards -->
     <div class="card-container">
         <!-- Movie Card 1 -->
@@ -199,5 +204,4 @@
     </div>
 </body>
 </html>
-
 
