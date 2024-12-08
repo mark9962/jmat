@@ -65,6 +65,25 @@
             margin-bottom: 20px;
         }
 
+        .movie-card-1 {
+            position: relative;
+            width: auto;  /* Set a fixed width for the cards */
+            height: 200px; /* Set a fixed height for the cards */
+            border-radius: 10px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            text-align: center;
+            color: white;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            margin-bottom: 20px;
+        }
+
         /* Hover effect to slightly enlarge the card */
         .movie-card:hover {
             transform: scale(1.05);
@@ -92,8 +111,8 @@
         }
         .main-title {
             margin-top: 20px;
-    font-size: 20px;
-    font-weight: 600;
+            font-size: 20px;
+           font-weight: 600;
         }
     </style>
 </head>
