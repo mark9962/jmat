@@ -17,8 +17,8 @@
             height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            align-items: flex-start; /* Align cards to the top */
+            overflow: auto;
         }
 
         /* Custom Scrollbar styling */
@@ -38,19 +38,20 @@
         /* Container for the card layout with scrolling */
         .card-container {
             display: flex;
-            flex-wrap: nowrap;
-            justify-content: flex-start;
+            flex-direction: column; /* Stack cards vertically */
             gap: 15px;
-            overflow-x: auto; /* Enable horizontal scrolling */
             padding: 20px;
             max-width: 100%;
+            overflow-y: auto; /* Enable vertical scrolling */
+            height: 100%;
+            width: 100%;
         }
 
         /* Styling for individual movie cards */
         .movie-card {
             position: relative;
-            width: 200px;
-            height: 120px;
+            width: 300px;
+            height: 180px;
             border-radius: 8px;
             overflow: hidden;
             background-size: cover;
@@ -169,3 +170,4 @@
     </div>
 </body>
 </html>
+
