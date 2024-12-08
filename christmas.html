@@ -42,22 +42,32 @@
     </style>
 </head>
 <body>
-    <div class="snowflakes" aria-hidden="true">
-        <!-- Hópelyhek generálása -->
-        <div class="snowflake">❅</div>
-        <div class="snowflake">❆</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❅</div>
-        <div class="snowflake">❆</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❅</div>
-        <div class="snowflake">❆</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❅</div>
-    </div>
+    <!-- Hópelyhek generálása JavaScript-tel -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const snowflakeCount = 20; // Hópelyhek száma
+            const snowflakesContainer = document.createElement('div');
+            snowflakesContainer.classList.add('snowflakes');
+            snowflakesContainer.setAttribute('aria-hidden', 'true');
 
-    <a style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2em; color: #fff; text-shadow: 0 0 10px #000;">
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.textContent = '❅';
+                snowflakesContainer.appendChild(snowflake);
+            }
+
+            document.body.appendChild(snowflakesContainer);
+        });
+    </script>
+
+    <!-- Az oldal tartalma -->
+    <h1 style="text-align: center; color: #fff; margin-top: 100px; text-shadow: 0 0 10px #000;">
         Boldog Karácsonyt Kívánunk! 🎄
-    </a>
+    </h1>
+    <p style="text-align: center; color: #fff; text-shadow: 0 0 10px #000;">
+        Töltse békében és boldogságban az ünnepeket!
+    </p>
 </body>
 </html>
+
