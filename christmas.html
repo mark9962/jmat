@@ -14,11 +14,11 @@
             margin: 0;
             padding: 0;
             text-align: center;
-            height: 100vh; /* Ensure full viewport height */
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Hide scroll on body */
+            overflow: hidden;
         }
 
         /* Custom Scrollbar styling */
@@ -35,22 +35,22 @@
             opacity: 0.8;
         }
 
-        /* Container for the card layout, with scroll enabled */
+        /* Container for the card layout with scrolling */
         .card-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
             gap: 15px;
             overflow-x: auto; /* Enable horizontal scrolling */
-            max-width: 100%;
             padding: 20px;
+            max-width: 100%;
         }
 
         /* Styling for individual movie cards */
         .movie-card {
             position: relative;
-            width: 220px;
-            height: 140px;
+            width: 200px;
+            height: 120px;
             border-radius: 8px;
             overflow: hidden;
             background-size: cover;
@@ -74,7 +74,7 @@
 
         /* Title styling for the movie name */
         .movie-card h3 {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
             margin: 0;
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
@@ -90,13 +90,6 @@
             padding: 5px;
             border-radius: 5px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
-        }
-
-        /* Ensure only horizontal scroll on the container */
-        .card-container {
-            overflow-x: auto;
-            overflow-y: hidden;
-            white-space: nowrap;
         }
 
     </style>
