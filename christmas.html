@@ -14,11 +14,11 @@
             margin: 0;
             padding: 0;
             text-align: center;
-            height: 100vh;
+            height: 100vh; /* Ensure full viewport height */
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align cards to the top */
-            overflow: auto;
+            align-items: center;
+            overflow: hidden; /* Hide scroll on body */
         }
 
         /* Custom Scrollbar styling */
@@ -35,23 +35,22 @@
             opacity: 0.8;
         }
 
-        /* Container for the card layout with scrolling */
+        /* Container for the card layout, with scroll enabled */
         .card-container {
             display: flex;
-            flex-direction: column; /* Stack cards vertically */
+            flex-wrap: wrap;
+            justify-content: space-evenly;
             gap: 15px;
-            padding: 20px;
+            overflow-x: auto; /* Enable horizontal scrolling */
             max-width: 100%;
-            overflow-y: auto; /* Enable vertical scrolling */
-            height: 100%;
-            width: 100%;
+            padding: 20px;
         }
 
         /* Styling for individual movie cards */
         .movie-card {
             position: relative;
-            width: 300px;
-            height: 180px;
+            width: 220px;
+            height: 140px;
             border-radius: 8px;
             overflow: hidden;
             background-size: cover;
@@ -75,7 +74,7 @@
 
         /* Title styling for the movie name */
         .movie-card h3 {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
             margin: 0;
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
@@ -91,6 +90,13 @@
             padding: 5px;
             border-radius: 5px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Ensure only horizontal scroll on the container */
+        .card-container {
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
         }
 
     </style>
